@@ -1,0 +1,76 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}
+
+.card-body {
+  background: linear-gradient(to right, teal, blue);
+  color: white; /* Texto visible sobre gradiente */
+}
+
+@keyframes gradientMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Clase compartida para borde y body */
+.gradient-animated {
+  background: linear-gradient(
+  270deg,
+  #1a1c2c 0%,    /* azul muy oscuro (casi negro metálico) */
+  #3a3d5c 25%,   /* gris azulado metálico */
+  #5a4a6e 50%,   /* violeta grisáceo metálico */
+  #444c6e 75%,   /* azul acero */
+  #6a5c88 100%   /* púrpura metálico suave */
+);
+  background-size: 600% 600%;
+  animation: gradientMove 8s ease infinite;
+}
+.gradient-border {
+  padding: 10px; /* grosor del borde */
+  border-radius: 0;
+  display: inline-block;
+  width: 100%;
+}
+.gradient-body {
+ color: white;
+}
