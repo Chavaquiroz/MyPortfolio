@@ -1,0 +1,14 @@
+/* Asegura que el documento ocupa toda la altura y sin márgenes */
+html, body, #root { height: 100%; width: 100%; }
+body { margin: 0; }
+
+/* El canvas como fondo a pantalla completa */
+.aurora-container {
+  position: fixed;
+  inset: 0;            /* top/right/bottom/left: 0 */
+  width: 100vw;
+  height: 100vh;
+  display: block;
+  pointer-events: none; /* no bloquea clicks */
+  z-index: -1;          /* detrás del contenido */
+}

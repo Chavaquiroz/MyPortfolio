@@ -52,15 +52,17 @@
   100% { background-position: 0% 50%; }
 }
 
+
+
 /* Clase compartida para borde y body */
 .gradient-animated {
   background: linear-gradient(
   270deg,
-  #1a1c2c 0%,    /* azul muy oscuro (casi negro metálico) */
+  #1a1c2c 0%,    /* azul muy oscuro */
   #3a3d5c 25%,   /* gris azulado metálico */
-  #5a4a6e 50%,   /* violeta grisáceo metálico */
+  #21265a 50%,   /* violeta grisáceo */
   #444c6e 75%,   /* azul acero */
-  #6a5c88 100%   /* púrpura metálico suave */
+  #321f53 100%   /* púrpura metálico suave */
 );
   background-size: 600% 600%;
   animation: gradientMove 8s ease infinite;
@@ -73,4 +75,66 @@
 }
 .gradient-body {
  color: white;
+}
+.skill-card {
+  position: relative;
+  aspect-ratio: 1 / 1;               /* cuadrado automático */
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.08); 
+  backdrop-filter: blur(12px) saturate(160%);
+  -webkit-backdrop-filter: blur(12px) saturate(160%);
+  transition: transform 200ms ease, box-shadow 300ms ease;
+  overflow: hidden;
+  border: none;                      /* ❌ sin borde */
+}
+
+.skill-card {
+  position: relative;
+  aspect-ratio: 1 / 1;               
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.08); 
+  backdrop-filter: blur(12px) saturate(160%);
+  -webkit-backdrop-filter: blur(12px) saturate(160%);
+  transition: transform 200ms ease, box-shadow 300ms ease;
+  overflow: hidden;
+  border: none;                      
+}
+
+.skill-card:hover {
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 10px 24px rgba(0,0,0,0.3);
+}
+
+/* capa de brillo metálico */
+.skill-card::after {
+  content: "";
+  position: absolute;
+  inset: -40%;
+  background: linear-gradient(
+      115deg,
+      rgba(0, 180, 255, 0) 0%,         /* transparente inicio */
+      rgba(0, 180, 255, 0) 45%,        /* azul metálico en medio */
+      rgba(0, 180, 255, 0.65) 50%,     /* punto de brillo */
+      rgba(0, 180, 255, 0) 55%, 
+      rgba(0, 180, 255, 0) 100%
+    );
+  mix-blend-mode: screen;
+  opacity: 0;
+  pointer-events: none;
+  animation: shimmer-sweep 8s linear infinite;  /* 🔹 lento */
+  animation-delay: var(--delay, 0s);
+}
+
+@keyframes shimmer-sweep {
+  0%   { transform: translate(-40%, -40%) rotate(12deg); opacity: 0; }
+  10%  { opacity: 0.8; }
+  20%  { transform: translate(40%, 40%) rotate(12deg); opacity: 0; }
+  100% { transform: translate(40%, 40%) rotate(12deg); opacity: 0; }
+}
+
+/* leve “respirar” del holo para que cambie sutilmente el color */
+@keyframes holo-breathe {
+  0%   { filter: saturate(120%) brightness(0.9); }
+  50%  { filter: saturate(160%) brightness(1.05); }
+  100% { filter: saturate(120%) brightness(0.9); }
 }

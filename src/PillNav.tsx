@@ -4,11 +4,10 @@ import "./css/PillNav.css";
 
 export type PillNavItem = {
   label: string;
+  targetId: string; // 👈 id del elemento al que debe ir
 };
 
 export interface PillNavProps {
-  logo: string;
-  logoAlt?: string;
   items: PillNavItem[];
   className?: string;
   ease?: string;
@@ -20,8 +19,6 @@ export interface PillNavProps {
 }
 
 const PillNav: React.FC<PillNavProps> = ({
-  logo,
-  logoAlt = "Logo",
   items,
   className = "",
   ease = "power3.easeOut",
@@ -36,11 +33,9 @@ const PillNav: React.FC<PillNavProps> = ({
   const circleRefs = useRef<Array<HTMLSpanElement | null>>([]);
   const tlRefs = useRef<Array<gsap.core.Timeline | null>>([]);
   const activeTweenRefs = useRef<Array<gsap.core.Tween | null>>([]);
-  const logoImgRef = useRef<HTMLImageElement | null>(null);
   const hamburgerRef = useRef<HTMLButtonElement | null>(null);
   const mobileMenuRef = useRef<HTMLDivElement | null>(null);
   const navItemsRef = useRef<HTMLDivElement | null>(null);
-  const logoRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     const layout = () => {
@@ -93,15 +88,9 @@ const PillNav: React.FC<PillNavProps> = ({
       document.fonts.ready.then(layout).catch(() => {});
     }
 
-    if (initialLoadAnimation) {
-      if (logoRef.current) {
-        gsap.set(logoRef.current, { scale: 0 });
-        gsap.to(logoRef.current, { scale: 1, duration: 0.6, ease });
-      }
-      if (navItemsRef.current) {
-        gsap.set(navItemsRef.current, { width: 0, overflow: "hidden" });
-        gsap.to(navItemsRef.current, { width: "auto", duration: 0.6, ease });
-      }
+    if (initialLoadAnimation && navItemsRef.current) {
+      gsap.set(navItemsRef.current, { width: 0, overflow: "hidden" });
+      gsap.to(navItemsRef.current, { width: "auto", duration: 0.6, ease });
     }
 
     return () => window.removeEventListener("resize", layout);
@@ -121,11 +110,12 @@ const PillNav: React.FC<PillNavProps> = ({
     activeTweenRefs.current[i] = tl.tweenTo(0, { duration: 0.2, ease });
   };
 
-  const handleLogoEnter = () => {
-    const img = logoImgRef.current;
-    if (!img) return;
-    gsap.set(img, { rotate: 0 });
-    gsap.to(img, { rotate: 360, duration: 0.2, ease });
+  const handleClick = (targetId: string) => {
+    const section = document.getElementById(targetId);
+    if (section) {
+      section.scrollIntoView({ behavior: "smooth" });
+      setIsMobileMenuOpen(false); // cerrar menú en móvil
+    }
   };
 
   const toggleMobileMenu = () => {
@@ -160,14 +150,6 @@ const PillNav: React.FC<PillNavProps> = ({
   return (
     <div className="pill-nav-container">
       <nav className={`pill-nav ${className}`} aria-label="Primary" style={cssVars}>
-        <div
-          className="pill-logo"
-          onMouseEnter={handleLogoEnter}
-          ref={logoRef}
-        >
-          <img src={logo} alt={logoAlt} ref={logoImgRef} />
-        </div>
-
         <div className="pill-nav-items" ref={navItemsRef}>
           <ul className="pill-list" role="menubar">
             {items.map((item, i) => (
@@ -177,6 +159,7 @@ const PillNav: React.FC<PillNavProps> = ({
                   className="pill"
                   onMouseEnter={() => handleEnter(i)}
                   onMouseLeave={() => handleLeave(i)}
+                  onClick={() => handleClick(item.targetId)} // 👈 scroll
                 >
                   <span
                     className="hover-circle"
@@ -218,7 +201,7 @@ const PillNav: React.FC<PillNavProps> = ({
             <li key={i}>
               <div
                 className="mobile-menu-link"
-                onClick={() => setIsMobileMenuOpen(false)}
+                onClick={() => handleClick(item.targetId)} // 👈 scroll en móvil
               >
                 {item.label}
               </div>

@@ -1,0 +1,82 @@
+/* No alto forzado ni scroll */
+.tl-card{
+  height:auto !important;
+  overflow:visible !important;
+  box-shadow:none !important;
+  filter:none !important;
+  background:rgb(49, 38, 95) !important;      /* ⚠️ fondo del wrapper = tu footer */
+  border-radius:0 !important;
+}
+
+/* Contenido interno del card */
+.tl-card .timeline-card-content,
+.tl-card .card-content,
+.tl-card > div{
+  max-height:none !important;
+  height:auto !important;
+  overflow:visible !important;
+  padding:0 !important;
+  background:transparent !important;
+  box-shadow:none !important;
+  filter:none !important;
+  -webkit-mask-image:none !important;
+  mask-image:none !important;
+}
+
+/* 🔥 Apaga cualquier overlay/fade aunque cambie el nombre de clase */
+.tl-card [class*="card-content"]::after,
+.tl-card [class*="cardContent"]::after,
+.tl-card [class*="timeline-card-content"]::after,
+.tl-card::after,
+.tl-card::before{
+  content:none !important;
+  display:none !important;
+  background:none !important;
+}
+
+/* También elimina contenedor "show more" si existiera */
+.tl-card [class*="show"] ,
+.tl-card [class*="show"]::before,
+.tl-card [class*="show"]::after{
+  content:none !important;
+  display:none !important;
+  background:none !important;
+  box-shadow:none !important;
+}
+
+/* Reset por si usan blend/backdrop */
+.tl-card *, .tl-card *::before, .tl-card *::after{
+  mix-blend-mode:normal !important;
+  backdrop-filter:none !important;
+  background-image:none !important;
+  box-shadow:none !important;
+}
+
+/* Logo */
+.logo-box{
+  width:100%;
+  display:block;
+  background:rgb(210,231,255);
+  overflow:hidden;
+}
+.logo-box img{
+  display:block;
+  width:100%;
+  height:auto;
+  object-fit:contain;
+}
+
+.card-footer h4{
+  margin: 0;
+  font-weight: 800;           /* más grueso */
+  font-size: 1.4rem;          /* un pelín más grande */
+  letter-spacing: .3px;       /* separa un poco las letras */
+  color: rgb(154, 188, 247);           /* título más claro que el texto */
+  text-transform: none;       /* o 'uppercase' si lo quieres en mayúsculas */
+}
+
+.card-footer p{
+  margin: .35rem 0 0;
+  font-weight: 500;           /* cuerpo un poco menos grueso */
+  color: rgb(201, 218, 248);             /* combina con tu tema */
+}
