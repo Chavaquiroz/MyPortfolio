@@ -3,7 +3,7 @@ import ProfilePic  from './assets/yopng.png'
 import ProfileCard from './ProfileCard.tsx' 
 import './css/App.css'
 import './css/timeline.css'
-import { Box, HStack, VStack, Image, Card, Text,Grid,GridItem} from '@chakra-ui/react'
+import { Box, HStack, VStack, Image, Card, Text,Grid,GridItem, SimpleGrid} from '@chakra-ui/react'
 import { useState } from "react";
 
 import TextType from './TextType.tsx'
@@ -15,7 +15,7 @@ import PillNav from './PillNav.tsx'
 import RotatingText from './RotatingText.tsx'
 import DecryptedText from './DecriptedText.tsx'
 import GlareHover from './GlareHover.tsx'
-import Competences from './Competences.tsx'
+import Competences, { type CompetenceItem } from "./Competences";
 import Stepper, {Step} from './Stepper.tsx'
 
 import { SiAmazonwebservices, SiAndroid, SiAseprite, SiBlender, SiDocker, SiTypescript,
@@ -31,6 +31,30 @@ import { Chrono } from "react-chrono";
 import { useMemo } from "react";
 /* ...tus imports de Chakra y GlareHover... */
 
+const itemscomp: CompetenceItem[] = [
+  {
+    title: "NASA Space Apps Challenge 2022",
+    description:
+      "Achieved 2nd place at the NASA International Space Apps Challenge Guadalajara 2022, the world's largest hackathon organized by NASA. Selected to represent Mexico at the international stage with an innovative project addressing real-world challenges in space science and technology",
+    image:
+      "/nasawhite.png",
+  },
+  {
+    title: "NASA Space Apps Challenge 2023",
+    description:
+      "Achieved 3rd place at the NASA International Space Apps Challenge Guanajuato 2023, the world's largest hackathon organized by NASA. Selected to represent Mexico at the international stage with an innovative project addressing real-world challenges in space science and technology",
+    image:
+      "/nasawhite.png",
+    
+  },
+  {
+    title: "Olimpiada Mexicana de Matemáticas",
+    description:
+      "Silver Medalist at the Mexican Mathematical Olympiad (OMM), a prestigious national high-school level competition that recognizes outstanding problem-solving and analytical skills",
+    image:
+      "/ommpng.png", 
+  }
+];
 
 const icons = [
   SiAmazonwebservices,
@@ -75,8 +99,8 @@ function App() {
   const timings = useMemo(
   () =>
     icons.map(() => ({
-      delay: `${(Math.random() * 10).toFixed(2)}s`,      // hasta 10s
-      duration: `${(6 + Math.random() * 6).toFixed(2)}s` // 6–12s
+      delay: `${(Math.random() * 10).toFixed(2)}s`,      
+      duration: `${(6 + Math.random() * 6).toFixed(2)}s` 
     })),
   []
 );
@@ -309,72 +333,45 @@ function App() {
         >
           Education
         </ScrollFloat>
-        <Box height={'3vh'}/>
-        <HStack width={'100%'} justify={'center'}>
-        {/* PRIMERA CARD */}
-          <Card.Root maxW="sm" overflow="hidden" position="relative">
-              {/* Borde animado */}
-              <Box className="gradient-border gradient-animated">
-                <Image
-                  src="/neiu.jpg"
-                  alt="Green double couch with wooden legs"
-                  width="100%"
-                  height="200px"
-                  objectFit="cover"
-                  display="block"
-                />
+        <Box height={'3vh'} id='education'/>
+        <Box>
+          <SimpleGrid
+            columns={{ base: 1, md: 2 }} 
+            gap={6}
+          justifyItems="center"
+          w="100%"
+          maxW="1000px"  // opcional: limitar ancho total del grid
+          mx="auto"
+          >
+            <Card.Root maxW="420px" w="100%" overflow="hidden" borderRadius="md" className='cardneiu'>
+              <Image src="/neiu.jpg" alt="NEIU" w="100%" h="220px" objectFit="cover" />
+              <Box position="relative">
+                <Box position="absolute" bottom="5" right="5">
+                  <Image src="/neiulogo.jpeg" alt="Logo" boxSize="60px" />
+                </Box>
               </Box>
-
-              { /* Logo pequeño */}
-              <Box position="absolute" bottom="8" right="5">
-                <Image
-                  src="/neiulogo.jpeg"
-                  alt="Logo pequeño"
-                  boxSize="60px"
-                />
-              </Box>
-
-              {/* Body con gradiente */}
-              <Card.Body gap="0" className="gradient-body gradient-animated">
+              <Card.Body>
                 <Card.Title>Northeastern Illinois University</Card.Title>
                 <Card.Description>
-                  B.S. in Physics<br /> 
-                  Exchange student during Spring 2024<br /> 
+                  B.S. in Physics<br/>Exchange student during Spring 2024
                 </Card.Description>
               </Card.Body>
             </Card.Root>
 
-            <Card.Root maxW="sm" overflow="hidden" position="relative">
-              {/* Borde animado como en la primera */}
-              <Box className="gradient-border gradient-animated">
-                <Image
-                  src="/ug.jpg"
-                  alt="Green2 double couch with wooden legs"
-                  width="100%"
-                  height="200px"
-                  objectFit="cover"
-                  display="block"
-                />
+            <Card.Root maxW="420px" w="100%" overflow="hidden" borderRadius="md" className='cardug'>
+              <Image src="/ug.jpg" alt="UG" w="100%" h="220px" objectFit="cover" />
+              <Box position="absolute" bottom="5" right="5">
+                <Image src="/uglogo.png" boxSize="60px" objectFit="contain" />
               </Box>
-
-              <Box position="absolute" bottom="4" right="2">
-                <Image
-                  src="/uglogo.png"
-                  boxSize="90px"
-                  objectFit="contain"
-                />
-              </Box>
-
-              {/* Body con el mismo gradiente */}
-              <Card.Body gap="0" className="gradient-body gradient-animated">
+              <Card.Body>
                 <Card.Title>Universidad de Guanajuato</Card.Title>
                 <Card.Description>
-                  Engineering Physics<br /> 
-                  GPA 9.4/10<br /> 
+                  Engineering Physics<br/>GPA 9.4/10
                 </Card.Description>
               </Card.Body>
             </Card.Root>
-        </HStack>           
+          </SimpleGrid>
+        </Box>
         </Box>
         <Box height={'10vh'} id='experience'/>
         <ScrollFloat
@@ -464,7 +461,7 @@ function App() {
         </ScrollFloat>
         <Box height={'3vh'}/>
         sdsd
-        <Box height={'10vh'}/>
+        <Box height={'10vh'} id='competences'/>
         <ScrollFloat
           animationDuration={1}
           ease='back.inOut(2)'
@@ -474,9 +471,9 @@ function App() {
         >
           Competences
         </ScrollFloat>
-        <Box height={'3vh'}/>
-        <Competences/>
-        <Box height={'10vh'} id='skills'/>
+
+        <Competences items={itemscomp} />
+
         <ScrollFloat
           animationDuration={1}
           ease='back.inOut(2)'
