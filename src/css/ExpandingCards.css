@@ -1,0 +1,163 @@
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --title-size: 24px;
+  --desc-size: 16px;
+  --text-color: #ffffff;
+  --overlay-color: rgba(0, 81, 180, 0.65);
+  --radius: 50px;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  /* Evita saltos por barra de URL en móvil */
+  height: 100dvh;
+
+  /* Evita el salto al aparecer la scrollbar */
+  overflow-y: auto;                 /* usa 'scroll' si quieres siempre visible */
+  scrollbar-gutter: stable both-edges;
+
+  -webkit-tap-highlight-color: transparent;
+}
+
+.container {
+  display: flex;
+  width: 90vw;
+}
+
+.panel {
+  background-position: center;
+  background-repeat: no-repeat;
+
+  /* Sin zoom: fija la imagen por altura */
+  background-size: auto 100%;
+
+  /* Altura estable (ajusta a tu gusto) */
+  height: clamp(360px, 80dvh, 700px);
+
+  border-radius: var(--radius);
+  color: var(--text-color);
+  cursor: pointer;
+  flex: 0.5;
+  margin: 10px;
+  position: relative;
+
+  /* La animación solo cambia el ancho (flex) */
+  transition: flex 0.7s ease-in;
+
+  /* Fondo negro si la imagen no alcanza */
+  background-color: #000;
+
+  outline: none; /* evita desplazamientos por foco (opc.) */
+}
+
+/* Overlay metálico azulado por defecto */
+.panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius);
+  background: var(--overlay-color); /* azul metálico por defecto */
+  mix-blend-mode: overlay;          /* efecto metálico */
+  pointer-events: none;
+  transition: opacity 0.4s ease-in;
+}
+
+/* Gradiente inferior para mejorar legibilidad del texto */
+.panel::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius);
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.55) 0%,
+    rgba(0, 0, 0, 0.35) 35%,
+    rgba(0, 0, 0, 0.15) 60%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  opacity: 0.9;
+  pointer-events: none;
+  transition: opacity 0.4s ease-in;
+}
+
+/* Contenedor del contenido textual */
+.panel__content {
+  position: absolute;
+  left: 20px;
+  right: 20px;
+  bottom: 20px;
+  z-index: 1; /* por encima de ::before/::after */
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.panel__title {
+  font-size: var(--title-size);
+  line-height: 1.1;
+  margin: 0;
+  color: var(--text-color);
+  text-shadow: 1px 1px 4px rgba(0,0,0,0.6);
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 0.3s ease-in 0.4s, transform 0.3s ease-in 0.4s;
+}
+
+.panel__desc {
+  font-size: var(--desc-size);
+  line-height: 1.35;
+  margin: 0;
+  color: var(--text-color);
+  font-weight: 300;
+  text-shadow: 1px 1px 4px rgba(0,0,0,0.5);
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.3s ease-in 0.5s, transform 0.3s ease-in 0.5s;
+}
+
+/* Estado activo (expandido) */
+.panel.active {
+  flex: 5; /* crecimiento horizontal */
+}
+
+.panel.active::before {
+  opacity: 0; /* desaparece overlay metálico al estar activo */
+}
+
+.panel.active .panel__title,
+.panel.active .panel__desc {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Accesibilidad: foco visible para teclado */
+.panel:focus-visible {
+  outline: 3px solid #69a3ff;
+  outline-offset: 3px;
+}
+
+/* Variante: siempre mostrar el texto (si la quieres) */
+.panel--always-text .panel__title,
+.panel--always-text .panel__desc {
+  opacity: 1;
+  transform: none;
+  transition-delay: 0s;
+}
+
+@media (max-width: 400px) {
+  .container {
+    width: 100vw;
+  }
+
+  .panel:nth-of-type(4),
+  .panel:nth-of-type(5) {
+    display: none;
+  }
+}

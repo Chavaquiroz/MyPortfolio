@@ -3,7 +3,7 @@ import ProfilePic  from './assets/yopng.png'
 import ProfileCard from './ProfileCard.tsx' 
 import './css/App.css'
 import './css/timeline.css'
-import { Box, HStack, VStack, Image, Card, Text,Grid,GridItem, SimpleGrid} from '@chakra-ui/react'
+import { Box, Stack, VStack, Image, Card, Text,Grid,GridItem, SimpleGrid} from '@chakra-ui/react'
 import { useState } from "react";
 
 import TextType from './TextType.tsx'
@@ -17,6 +17,7 @@ import DecryptedText from './DecriptedText.tsx'
 import GlareHover from './GlareHover.tsx'
 import Competences, { type CompetenceItem } from "./Competences";
 import Stepper, {Step} from './Stepper.tsx'
+import ExpandingCards from './ExpandingCards.tsx'
 
 import { SiAmazonwebservices, SiAndroid, SiAseprite, SiBlender, SiDocker, SiTypescript,
   SiPython,SiPostman, SiGithub,SiNpm, SiPostgresql, SiLinux, SiReact, SiVite, SiGodotengine, SiCplusplus,
@@ -53,6 +54,56 @@ const itemscomp: CompetenceItem[] = [
       "Silver Medalist at the Mexican Mathematical Olympiad (OMM), a prestigious national high-school level competition that recognizes outstanding problem-solving and analytical skills",
     image:
       "/ommpng.png", 
+  }
+];
+
+const cardsData = [
+  {
+    id: 8,
+    url:
+      "/horariosfeos.png",
+    title: "Horarios Feos",
+    description: "Un lugar para explorar",
+    textColor: "#832decff",
+    titleSize: "clamp(22px, 3vw, 36px)",
+    descSize: "clamp(14px, 2vw, 18px)",
+    overlayColor: "rgba(0,0,0,0.35)"
+  },
+  {
+    id: 2,
+    url:
+      "prometeo.png",
+    title: "Wild Forest"
+  },
+  {
+    id: 3,
+    url:
+      "/horariosguapos.png",
+    title: "Sunny Beach"
+  }
+];
+
+
+const cardsData2 = [
+  {
+    id: 4,
+    url: "clima.png",
+    title: "Explore The World"
+  },
+  {
+    id: 5,
+    url:"fortran.png",
+    title: "Wild Forest"
+  },
+  {
+    id: 6,
+    url:"proyectolunas.jpg",
+    title: "Sunny Beach"
+  },
+  {
+    id: 7,
+    url:"proyectovirus.jpg",
+    title: "City on Winter"
   }
 ];
 
@@ -129,107 +180,119 @@ function App() {
         pillTextColor = "#E0E6F8"
       />
       <Box height={'10vh'}/>
-      <Box style={{ width: '100%', position: 'relative' }}>
-        
-        <HStack justify={'center'}>
-          <ProfileCard
-            name="Salvador Quiroz"
-            iconUrl={ProfilePic}
-            title="Software Developer"
-            handle="chavasado"
-            status='Available'
-            contactText="Contact Me"
-            avatarUrl={ProfilePic}
-            showUserInfo={true}
-            enableTilt={true}
-            enableMobileTilt={false}
-            onContactClick={() => {
-              const section = document.getElementById("contact");
-              section?.scrollIntoView({ behavior: "smooth" });
-            }}
-          />
-          <VStack justify='center'>
-            <Box
-              height="30vh"
-              display="flex"
-              alignItems="center"
-              justifyContent="center"
-              position="relative" 
-              overflow="hidden"   
-            >
+      <Box w="100%" pos="relative">
+  <Stack
+    direction={{ base: "column", lg: "row" }}
+    gap={{ base: 6, lg: 10 }}
+    align={{ base: "center", lg: "flex-start" }}   // 👈 centro en móvil, alineado arriba en desktop
+    justify="center"
+    w="100%"
+    maxW="1200px"
+    mx="auto"
+    px={{ base: 4, md: 6 }}
+    textAlign={{ base: "center", lg: "left" }}     // 👈 centra texto en móvil
+  >
+    {/* Profile */}
+    <Box
+      w={{ base: "100%", lg: "auto" }}
+      maxW={{ base: "360px", md: "480px", lg: "unset" }}
+      display="flex"
+      justifyContent="center"
+    >
+      <ProfileCard
+        name="Salvador Quiroz"
+        iconUrl={ProfilePic}
+        title="Software Developer"
+        handle="chavasado"
+        status="Available"
+        contactText="Contact Me"
+        avatarUrl={ProfilePic}
+        showUserInfo={true}
+        enableTilt={true}
+        enableMobileTilt={false}
+        onContactClick={() => {
+          const section = document.getElementById("contact");
+          section?.scrollIntoView({ behavior: "smooth" });
+        }}
+      />
+    </Box>
 
-              <Box position="relative" zIndex={1}>
-                <TextType
-                  style={{ fontSize: "35px" }}
-                  className="pixelify-sans"
-                  text={["Welcome to my Portfolio :)\nI'm Chava"]}
-                  typingSpeed={75}
-                  pauseDuration={1500}
-                  showCursor={true}
-                  cursorCharacter="|"
-                />
-              </Box>
-          </Box>
-          <SpotlightCard className="custom-spotlight-card" spotlightColor="rgba(46, 111, 184, 0.55)">
-            <Box width={'30vw'}>
-              <GradientText 
-                colors={[
-                  "#566ef5ff", // azul claro brillante
-                  "#de84edff", // plata clásico
-                  "#5493e6ff", // azul muy pálido brillante
-                  "#cea8fdff", // gris plata oscuro
-                  "#b0ffeeff"  // azul metálico suave
-                ]}
-                animationSpeed={5}
-                showBorder={false}
-                
-                className="custom-class"
-              > +
-                  <CountUp
-                    from={0}
-                    to={8}
-                    
-                    separator=","
-                    direction="up"
-                    duration={1}
-                    className="count-up-text"
-                  />
-                  &#160; Years of experience
-              </GradientText>
-            </Box>
-          </SpotlightCard>
-          <SpotlightCard className="custom-spotlight-card" spotlightColor="rgba(46, 111, 184, 0.55)">
-            <Box width={'30vw'}>
-              <GradientText 
-                colors={[
-                  "#566ef5ff", // azul claro brillante
-                  "#de84edff", // plata clásico
-                  "#5493e6ff", // azul muy pálido brillante
-                  "#cea8fdff", // gris plata oscuro
-                  "#b0ffeeff"  // azul metálico suave
-                ]}
-                animationSpeed={12}
-                showBorder={false}
-                
-                className="custom-class"
-              > +
-                  <CountUp
-                    from={0}
-                    to={30}
-                    
-                    separator=","
-                    direction="up"
-                    duration={1}
-                    className="count-up-text"
-                  />
-                  &#160; Coding Projects
-              </GradientText>
-            </Box>
-          </SpotlightCard>
-          </VStack>
-          
-        </HStack>
-        <Box height={'10vh'} id='about'/>
+    {/* Texto + métricas */}
+    <VStack
+      w="100%"
+      maxW={{ base: "560px", lg: "520px" }}
+      gap={4}
+      align={{ base: "center", lg: "stretch" }}     // 👈 centra en pantallas pequeñas
+    >
+      <Box
+        h="auto"
+        minH={{ md: "160px" }}
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
+        px={{ base: 2, md: 0 }}
+      >
+        <Box pos="relative" zIndex={1} w="100%">
+          <TextType
+            style={{
+              fontSize: "clamp(20px, 5vw, 36px)",
+              whiteSpace: "pre-wrap",
+              lineHeight: 1.3,
+            }}
+            className="pixelify-sans"
+            text={["Welcome to my Portfolio :)\nI'm Chava"]}
+            typingSpeed={75}
+            pauseDuration={1500}
+            showCursor={true}
+            cursorCharacter="|"
+          />
+        </Box>
+      </Box>
+
+      {/* Métrica 1 */}
+      <SpotlightCard
+        className="custom-spotlight-card"
+        spotlightColor="rgba(46, 111, 184, 0.55)"
+      >
+        <Box w="100%" maxW={{ base: "100%", md: "420px" }}>
+          <GradientText
+            colors={["#566ef5ff", "#de84edff", "#5493e6ff", "#cea8fdff", "#b0ffeeff"]}
+            animationSpeed={5}
+            showBorder={false}
+            className="custom-class"
+          >
+            +
+            <CountUp from={0} to={8} separator="," direction="up" duration={1} />
+            &nbsp; Years of experience
+          </GradientText>
+        </Box>
+      </SpotlightCard>
+
+      {/* Métrica 2 */}
+      <SpotlightCard
+        className="custom-spotlight-card"
+        spotlightColor="rgba(46, 111, 184, 0.55)"
+      >
+        <Box w="100%" maxW={{ base: "100%", md: "420px" }}>
+          <GradientText
+            colors={["#566ef5ff", "#de84edff", "#5493e6ff", "#cea8fdff", "#b0ffeeff"]}
+            animationSpeed={12}
+            showBorder={false}
+            className="custom-class"
+          >
+            +
+            <CountUp from={0} to={30} separator="," direction="up" duration={1} />
+            &nbsp; Coding Projects
+          </GradientText>
+        </Box>
+      </SpotlightCard>
+    </VStack>
+  </Stack>
+</Box>
+
+
+<Box h={{ base: "6vh", md: "10vh" }} id="about" />
+
 
 
         
@@ -372,7 +435,6 @@ function App() {
             </Card.Root>
           </SimpleGrid>
         </Box>
-        </Box>
         <Box height={'10vh'} id='experience'/>
         <ScrollFloat
           animationDuration={1}
@@ -460,7 +522,8 @@ function App() {
           Projects 
         </ScrollFloat>
         <Box height={'3vh'}/>
-        sdsd
+        <ExpandingCards data={cardsData} />
+        <ExpandingCards data={cardsData2} />
         <Box height={'10vh'} id='competences'/>
         <ScrollFloat
           animationDuration={1}

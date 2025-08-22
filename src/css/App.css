@@ -177,6 +177,12 @@
   box-shadow: 0px 3px 187.5px 7.5px rgba(0, 4, 255, 0.4);
 }
 
+.pixelify-sans {
+  white-space: pre-wrap; /* respeta el salto de línea y permite wrapping */
+  word-break: break-word;
+}
+
+
 /* Para mantener contenido interno con fondo oscuro */
 .cardug .gradient-body {
   background: #0f172a;
